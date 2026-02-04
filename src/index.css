@@ -1,5 +1,11 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 body{
   height: 100vh;
+  background-color: aqua;
+}
+.dark body {
+  background-color: #020817;
 }
 :root{
   height: 100%;

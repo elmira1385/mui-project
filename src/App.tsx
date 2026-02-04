@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import ButtonUsage from './components/Button'
+import BasicGrid from './components/BasicGrid'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-    <div>hi</div>
-    </>
+   <BasicGrid/>
   )
 }
 
