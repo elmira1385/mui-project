@@ -1,6 +1,5 @@
 import {
   FormControl,
-  FormHelperText,
   MenuItem,
   Select,
   SvgIcon,
@@ -10,14 +9,15 @@ import Box from "@mui/material/Box";
 
 import Grid from "@mui/material/Grid";
 import ButtonUsage from "./Button";
-import { Bolt, Inventory, ViewInAr } from "@mui/icons-material";
+import { Bolt, DarkMode, LightMode, Mood, ViewInAr, WbSunnyOutlined } from "@mui/icons-material";
 import { useState } from "react";
+import { useTheme } from "../store/useTheme";
 
 export default function BasicGrid() {
-  const [theme, setTheme] = useState("");
-
+  const [color, setColor] = useState("");
+  const { theme, setTheme } = useTheme();
   const handleChange = (event: SelectChangeEvent) => {
-    setTheme(event.target.value);
+    setColor(event.target.value);
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -43,7 +43,7 @@ export default function BasicGrid() {
           </div>
         </Grid>
         <Grid size={10}>
-          <div className="flex justify-end items-center gap-2 bg-white p-2 border-b dark:bg-[#121519] border-gray-300 dark:border-gray-800">
+          <div className="flex justify-end items-center gap-4 bg-white p-1.75 border-b dark:bg-[#121519] border-gray-300 dark:border-gray-800">
             <div className="border-r flex gap-2  pr-4 border-gray-300 dark:border-gray-800">
               <div className="bg-[#F6F7F8] px-0.5 rounded-lg border border-gray-300 dark:border-gray-800 dark:bg-[#121519]">
                 <SvgIcon>
@@ -66,19 +66,19 @@ export default function BasicGrid() {
                   "& .MuiSelect-icon": { color: "#000" },
                   ".dark & .MuiSelect-icon": { color: "#256BD6" },
                 }}
-                value={theme}
+                value={color}
                 onChange={handleChange}
                 MenuProps={{
-                  PaperProps:{
+                  PaperProps: {
                     sx: {
-                    backgroundColor: "#fff",
-                    color:"#000",
-                    '.dark &': {
-                      backgroundColor: "#121519",
-                      color:"#256BD6",
+                      backgroundColor: "#fff",
+                      color: "#000",
+                      ".dark &": {
+                        backgroundColor: "#121519",
+                        color: "#256BD6",
+                      },
                     },
                   },
-                  }
                 }}
                 displayEmpty
               >
@@ -94,11 +94,27 @@ export default function BasicGrid() {
                 </MenuItem>
               </Select>
             </FormControl>
+            <div
+              onClick={() => {
+                if (theme === "light") {
+                  setTheme("dark");
+                } else {
+                  setTheme("light");
+                }
+              }}
+              className="bg-[#F6F7F8]  px-0.5 mr-2 rounded-lg border border-gray-300 dark:border-gray-800 dark:bg-[#121519]"
+            >
+              {theme==="light"?<SvgIcon>
+                <LightMode fontSize="small" sx={{ color: "#256BD6" }} />
+              </SvgIcon>:<SvgIcon>
+                <DarkMode fontSize="small" sx={{ color: "#256BD6" }} />
+              </SvgIcon>}
+            </div>
           </div>
         </Grid>
         <Grid size={2}>sidebar</Grid>
         <Grid size={10}>
-          <ButtonUsage />
+          main
         </Grid>
       </Grid>
     </Box>
