@@ -1,24 +1,35 @@
 import {
   FormControl,
   MenuItem,
+  Paper,
   Select,
   SvgIcon,
+  Typography,
   type SelectChangeEvent,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 
 import Grid from "@mui/material/Grid";
-import ButtonUsage from "./Button";
-import { Bolt, DarkMode, LightMode, Mood, ViewInAr, WbSunnyOutlined } from "@mui/icons-material";
+
+import { Bolt, DarkMode, LightMode, ViewInAr } from "@mui/icons-material";
 import { useState } from "react";
 import { useTheme } from "../store/useTheme";
 
 export default function BasicGrid() {
   const [color, setColor] = useState("");
   const { theme, setTheme } = useTheme();
+  const[isShow,setIsShow]=useState(false)
   const handleChange = (event: SelectChangeEvent) => {
     setColor(event.target.value);
   };
+  const products = [
+    { id: 1, title: "Sitemark-web", subtitle: "Web app",img:"/svg/one.svg" },
+    { id: 2, title: "Sitemark-app", subtitle: "Mobile application",img:"/svg/two.svg" },
+    { id: 3, title: "Sitemark-Store", subtitle: "Web app",img:"/svg/three.svg" },
+    { id: 4, title: "Sitemark-Admin", subtitle: "Web app" ,img:"/svg/four.svg"},
+    { id: 4, title: "Add product", subtitle: "Web app" ,img:"/svg/five.svg"}
+  ];
+  const [selected, setSelected] = useState(products[0]);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container>
@@ -104,18 +115,78 @@ export default function BasicGrid() {
               }}
               className="bg-[#F6F7F8]  px-0.5 mr-2 rounded-lg border border-gray-300 dark:border-gray-800 dark:bg-[#121519]"
             >
-              {theme==="light"?<SvgIcon>
-                <LightMode fontSize="small" sx={{ color: "#256BD6" }} />
-              </SvgIcon>:<SvgIcon>
-                <DarkMode fontSize="small" sx={{ color: "#256BD6" }} />
-              </SvgIcon>}
+              {theme === "light" ? (
+                <SvgIcon>
+                  <LightMode fontSize="small" sx={{ color: "#256BD6" }} />
+                </SvgIcon>
+              ) : (
+                <SvgIcon>
+                  <DarkMode fontSize="small" sx={{ color: "#256BD6" }} />
+                </SvgIcon>
+              )}
             </div>
           </div>
         </Grid>
-        <Grid size={2}>sidebar</Grid>
-        <Grid size={10}>
-          main
+        <Grid size={2}>
+          <Box onClick={() => {
+            if(isShow===false){
+              setIsShow(true)
+            }else{
+              setIsShow(false)
+            }
+          }} sx={{ display: "flex ",flexDirection: "column", gap: 1 }}>
+      
+            <Paper className="flex gap-4"
+              elevation={3}
+              onClick={() => setSelected(p)}
+              sx={{
+                padding: 2,
+                width: 200,
+                borderRadius: 3,
+                border: "2px solid #1976d2",
+              }}
+            >
+              <img src={selected.img} alt="" />
+              <div className="flex flex-col border-none">
+               <Typography fontWeight={600}>{selected.title}</Typography>
+              <Typography variant="caption" color="text.secondary">
+                {selected.subtitle}
+              </Typography>
+              </div>
+            </Paper>
+
+            
+            {isShow&&<Box  sx={{ display: "flex", flexDirection: "column", gap: 0.5 ,}}>
+              {products.map((p) => (
+                <Paper className="flex gap-4"
+                  key={p.id}
+                  onClick={() => setSelected(p)}
+                  sx={{
+                    padding: 2,
+                    width: 200,
+                    borderRadius: 3,
+                    cursor: "pointer",
+                    border:
+                      selected.id === p.id
+                        ? "2px solid #1976d2"
+                        : "1px solid #ddd",
+                    transition: "0.2s",
+                    "&:hover": { borderColor: "#1976d2" },
+                  }}
+                >
+                  <img src={p.img} alt="" />
+                 <div className="flex flex-col border-none">
+                   <Typography fontWeight={600}>{p.title}</Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {p.subtitle}
+                  </Typography>
+                 </div>
+                </Paper>
+              ))}
+            </Box>}
+          </Box>
         </Grid>
+        <Grid size={10}>main</Grid>
       </Grid>
     </Box>
   );
