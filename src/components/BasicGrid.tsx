@@ -18,16 +18,31 @@ import { useTheme } from "../store/useTheme";
 export default function BasicGrid() {
   const [color, setColor] = useState("");
   const { theme, setTheme } = useTheme();
-  const[isShow,setIsShow]=useState(false)
+  const [isShow, setIsShow] = useState(false);
   const handleChange = (event: SelectChangeEvent) => {
     setColor(event.target.value);
   };
   const products = [
-    { id: 1, title: "Sitemark-web", subtitle: "Web app",img:"/svg/one.svg" },
-    { id: 2, title: "Sitemark-app", subtitle: "Mobile application",img:"/svg/two.svg" },
-    { id: 3, title: "Sitemark-Store", subtitle: "Web app",img:"/svg/three.svg" },
-    { id: 4, title: "Sitemark-Admin", subtitle: "Web app" ,img:"/svg/four.svg"},
-    { id: 4, title: "Add product", subtitle: "Web app" ,img:"/svg/five.svg"}
+    { id: 1, title: "Sitemark-web", subtitle: "Web app", img: "/svg/one.svg" },
+    {
+      id: 2,
+      title: "Sitemark-app",
+      subtitle: "Mobile application",
+      img: "/svg/two.svg",
+    },
+    {
+      id: 3,
+      title: "Sitemark-Store",
+      subtitle: "Web app",
+      img: "/svg/three.svg",
+    },
+    {
+      id: 4,
+      title: "Sitemark-Admin",
+      subtitle: "Web app",
+      img: "/svg/four.svg",
+    },
+    { id: 4, title: "Add product", subtitle: "Web app", img: "/svg/five.svg" },
   ];
   const [selected, setSelected] = useState(products[0]);
   return (
@@ -128,62 +143,93 @@ export default function BasicGrid() {
           </div>
         </Grid>
         <Grid size={2}>
-          <Box onClick={() => {
-            if(isShow===false){
-              setIsShow(true)
-            }else{
-              setIsShow(false)
-            }
-          }} sx={{ display: "flex ",flexDirection: "column", gap: 1 }}>
-      
-            <Paper className="flex gap-4"
+          <Box
+            onClick={() => {
+              if (isShow === false) {
+                setIsShow(true);
+              } else {
+                setIsShow(false);
+              }
+            }}
+            sx={{
+              display: "flex ",
+              flexDirection: "column",
+              gap: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop:"20px"
+             
+            }}
+          >
+            <Paper
+              className="flex gap-4"
               elevation={3}
               onClick={() => setSelected(p)}
               sx={{
-                padding: 2,
-                width: 200,
+                padding:"10px",
+                width: 220,
                 borderRadius: 3,
                 border: "2px solid #1976d2",
+                justifyContent:"space-around",
+                alignItems:"center"
               }}
             >
               <img src={selected.img} alt="" />
               <div className="flex flex-col border-none">
-               <Typography fontWeight={600}>{selected.title}</Typography>
-              <Typography variant="caption" color="text.secondary">
-                {selected.subtitle}
-              </Typography>
+                <Typography fontSize="14px" fontWeight={600}>
+                  {selected.title}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {selected.subtitle}
+                </Typography>
               </div>
+              <svg
+                fill="#000000"
+                width="14px"
+                height="14px"
+                viewBox="0 0 24 24"
+                id="triple-down-sign"
+                data-name="Line Color"
+                xmlns="http://www.w3.org/2000/svg"
+                
+              >
+                <polyline id="primary" points="19 14 12 21 5 14"></polyline>
+              </svg>
             </Paper>
 
-            
-            {isShow&&<Box  sx={{ display: "flex", flexDirection: "column", gap: 0.5 ,}}>
-              {products.map((p) => (
-                <Paper className="flex gap-4"
-                  key={p.id}
-                  onClick={() => setSelected(p)}
-                  sx={{
-                    padding: 2,
-                    width: 200,
-                    borderRadius: 3,
-                    cursor: "pointer",
-                    border:
-                      selected.id === p.id
-                        ? "2px solid #1976d2"
-                        : "1px solid #ddd",
-                    transition: "0.2s",
-                    "&:hover": { borderColor: "#1976d2" },
-                  }}
-                >
-                  <img src={p.img} alt="" />
-                 <div className="flex flex-col border-none">
-                   <Typography fontWeight={600}>{p.title}</Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    {p.subtitle}
-                  </Typography>
-                 </div>
-                </Paper>
-              ))}
-            </Box>}
+            {isShow && (
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+                {products.map((p) => (
+                  <Paper
+                    className="flex gap-4"
+                    key={p.id}
+                    onClick={() => setSelected(p)}
+                    sx={{
+                      padding:"10px",
+                width: 220,
+                      borderRadius: 3,
+                      cursor: "pointer",
+                      border:
+                        selected.id === p.id
+                          ? "2px solid #1976d2"
+                          : "1px solid #ddd",
+                      transition: "0.2s",
+                      "&:hover": { borderColor: "#1976d2" },
+                    }}
+                  >
+                    <img src={p.img} alt="" />
+                    <div className="flex flex-col border-none">
+                      <Typography fontSize="14px" fontWeight={600}>
+                        {p.title}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {p.subtitle}
+                      </Typography>
+                    </div>
+                  </Paper>
+                ))}
+              </Box>
+            )}
           </Box>
         </Grid>
         <Grid size={10}>main</Grid>
